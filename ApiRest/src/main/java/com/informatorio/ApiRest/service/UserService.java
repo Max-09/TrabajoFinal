@@ -36,5 +36,13 @@ public class UserService {
         }
     }
 
-
+    public User actualizarUser(Long userId, User userNew){
+        User userOld = userRepository.getById(userId);
+        userOld.setNombre(userNew.getNombre());
+        userOld.setApellido(userNew.getApellido());
+        userOld.setPais(userNew.getPais());
+        userOld.setCiudad(userNew.getCiudad());
+        userOld.setProvincia(userNew.getProvincia());
+        return userRepository.save(userOld);
+    }
 }
