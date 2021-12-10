@@ -43,4 +43,8 @@ public class StartupService {
         startupOld.setPublicado(startupNew.isPublicado());
         return startupRepository.save(startupOld);
     }
+
+    public ArrayList<Startup> obtenerPorNombre(String nombre){
+        return startupRepository.getByNombre(nombre);
+    }
 }

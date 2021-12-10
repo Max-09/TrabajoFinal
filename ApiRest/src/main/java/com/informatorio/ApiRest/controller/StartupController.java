@@ -3,9 +3,14 @@ package com.informatorio.ApiRest.controller;
 import java.util.ArrayList;
 
 import com.informatorio.ApiRest.entity.Startup;
+import com.informatorio.ApiRest.repository.StartupRepository;
+import com.informatorio.ApiRest.repository.TagRepository;
 import com.informatorio.ApiRest.service.StartupService;
+import com.informatorio.ApiRest.service.TagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +26,12 @@ public class StartupController {
 
     @Autowired
     StartupService startupService;
+    @Autowired
+    TagService tagService;
+    @Autowired
+    StartupRepository startupRepository;
+    @Autowired
+    TagRepository tagRepository;
 
     @GetMapping
     public ArrayList<Startup> obtenerStartup(){
@@ -45,6 +56,10 @@ public class StartupController {
     @PutMapping("/{id}")
     public Startup actualizarUser(@PathVariable Long id, @RequestBody Startup startup){
         return this.startupService.actualizarStartup(id, startup);
+    }
+    @GetMapping (value = "/tag/{tag}")
+    public ResponseEntity<?> buscarPorTag(@PathVariable("tag") String tag){
+        return new ResponseEntity<>(startupRepository.findByTag(tag), HttpStatus.OK);
     }
     
 }
