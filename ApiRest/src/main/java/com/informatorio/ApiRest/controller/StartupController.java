@@ -61,5 +61,10 @@ public class StartupController {
     public ResponseEntity<?> buscarPorTag(@PathVariable("tag") String tag){
         return new ResponseEntity<>(startupRepository.findByTag(tag), HttpStatus.OK);
     }
+
+    @GetMapping (value = "/online/{publicado}")
+    public ResponseEntity<?> buscarPorOnline(@PathVariable("publicado") Boolean o){
+        return new ResponseEntity<>(startupRepository.findByPublicado(o), HttpStatus.OK);
+    }
     
 }
