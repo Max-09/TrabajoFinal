@@ -1,5 +1,6 @@
 package com.informatorio.ApiRest.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -31,7 +33,8 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @CreationTimestamp
-    private LocalDateTime fechaCreacion;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate fechaCreacion;
     private String ciudad;
     private String provincia;
     private String pais;
@@ -67,10 +70,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
     public String getCiudad() {

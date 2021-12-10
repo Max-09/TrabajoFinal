@@ -1,5 +1,7 @@
 package com.informatorio.ApiRest.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import com.informatorio.ApiRest.repository.UserRepository;
 import com.informatorio.ApiRest.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,7 +62,12 @@ public class UserController {
     }
 
     @GetMapping (value = "/ciudad/{ciudad}")
-    public ResponseEntity<?> buscarPorCiudad (@PathVariable("ciudad") String ciudadABuscar){
+    public ResponseEntity<?> buscarPorCiudad(@PathVariable("ciudad") String ciudadABuscar){
         return new ResponseEntity<>(userRepository.findByCiudad(ciudadABuscar), HttpStatus.OK);
+    }
+
+    @GetMapping (value = "/fecha/{fecha}")
+    public ResponseEntity<?> buscarPorFecha(@DateTimeFormat(pattern="yyyy-MM-dd") @PathVariable("fecha") LocalDate fecha){
+        return new ResponseEntity<>(userRepository.findByFechaCreacionAfter(fecha), HttpStatus.OK);
     }
 }
