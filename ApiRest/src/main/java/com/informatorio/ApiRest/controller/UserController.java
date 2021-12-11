@@ -1,8 +1,6 @@
 package com.informatorio.ApiRest.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Optional;
 
 import com.informatorio.ApiRest.entity.User;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,10 +30,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
-    public ArrayList<User> obtenerUsuarios(){
-        return userService.obtenerUsuarios();
-    }
+    
 
     @PostMapping
     public User guardarUsuario(@RequestBody User usuario){
@@ -51,7 +47,7 @@ public class UserController {
         }
     }
 
-    @GetMapping( path = "/{id}")
+    @GetMapping(path = "/{id}")
     public Optional<User> obtenerUsuarioPorId(@PathVariable("id") Long id) {
         return this.userService.obtenerPorId(id);
     }
@@ -61,13 +57,15 @@ public class UserController {
         return this.userService.actualizarUser(id, user);
     }
 
-    @GetMapping (value = "/ciudad/{ciudad}")
-    public ResponseEntity<?> buscarPorCiudad(@PathVariable("ciudad") String ciudadABuscar){
-        return new ResponseEntity<>(userRepository.findByCiudad(ciudadABuscar), HttpStatus.OK);
-    }
-
-    @GetMapping (value = "/fecha/{fecha}")
-    public ResponseEntity<?> buscarPorFecha(@DateTimeFormat(pattern="yyyy-MM-dd") @PathVariable("fecha") LocalDate fecha){
-        return new ResponseEntity<>(userRepository.findByFechaCreacionAfter(fecha), HttpStatus.OK);
+    @GetMapping 
+    public ResponseEntity<?> obtenerUser(
+            @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fecha,
+            @RequestParam(required = false) String ciudad){
+                if(fecha != null){
+                    return new ResponseEntity<>(userRepository.findByFechaCreacionAfter(fecha), HttpStatus.OK);
+                } else if (ciudad != null){
+                    return new ResponseEntity<>(userRepository.findByCiudad(ciudad), HttpStatus.OK);
+                }
+                return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 }

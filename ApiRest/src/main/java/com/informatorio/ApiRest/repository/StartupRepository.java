@@ -17,5 +17,6 @@ public interface StartupRepository extends JpaRepository<Startup, Long>{
     @Query("SELECT e FROM Startup e join fetch e.tags t WHERE t.tagName LIKE %:tag%")
     List<Startup> findByTag(@Param("tag") String tag);
     List<Startup> findByPublicado(Boolean publicado);
+    public List<Startup> findByOrderByVotosDesc();
     
 }

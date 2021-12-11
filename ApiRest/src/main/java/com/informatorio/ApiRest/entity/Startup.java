@@ -30,7 +30,8 @@ public class Startup {
     private boolean publicado;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
-    
+    private Integer votos = 0;
+
     public Long getId() {
         return id;
     }
@@ -79,11 +80,18 @@ public class Startup {
     public void setTags(List<Tags> tags) {
         this.tags = tags;
     }
-    
+    public Integer getVotos() {
+        return votos;
+    }
+    public void setVotos(Integer votos) {
+        this.votos = votos;
+    }
     @Override
     public String toString() {
         return "Startup [contenido=" + contenido + ", descripcion=" + descripcion + ", fechaCreacion=" + fechaCreacion
                 + ", id=" + id + ", nombre=" + nombre + ", objetivo=" + objetivo + ", publicado=" + publicado
-                + ", tags=" + tags + "]";
+                + ", tags=" + tags + ", votos=" + votos + "]";
     }
+
+    
 }
