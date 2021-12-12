@@ -24,12 +24,12 @@ public class VotesController {
     VotesRepository votesRepository;
 
     @PostMapping
-    public Votes guardarStartup(@RequestBody Votes voto){
+    public Votes voto(@RequestBody Votes voto){
         return this.votesService.votar(voto);
     }
 
-    @GetMapping (value = "/votosuser/{userId}")
-    public ResponseEntity<?> buscarPorTag(@PathVariable("userId") Long userId){
-        return new ResponseEntity<>(votesRepository.getByUserId(userId), HttpStatus.OK);
+    @GetMapping (value = "/votosuser/{email}")
+    public ResponseEntity<?> votosPorUsuario(@PathVariable("email") String email){
+        return new ResponseEntity<>(votesRepository.getByEmail(email), HttpStatus.OK);
     }
 }

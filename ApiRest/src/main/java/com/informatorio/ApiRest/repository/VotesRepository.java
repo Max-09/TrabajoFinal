@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VotesRepository extends JpaRepository<Votes, Long>{
 
-    List<Votes> getByUserId(Long userId);
+    List<Votes> getByEmail(String email);
     
 }
