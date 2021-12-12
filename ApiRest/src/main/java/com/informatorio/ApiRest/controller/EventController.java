@@ -49,9 +49,9 @@ public class EventController {
         return this.eventService.actualizarEvent(id, event);
     }
 
-    @GetMapping 
+    @GetMapping
     public ResponseEntity<?> ranking(@RequestParam(required = false) Long eventId){
-        return new ResponseEntity<>(startupRepository.findByEventId(eventId), HttpStatus.OK);
+        return new ResponseEntity<>(startupRepository.findByEventIdOrderByVotosDesc(eventId), HttpStatus.OK);
     }
 
 }

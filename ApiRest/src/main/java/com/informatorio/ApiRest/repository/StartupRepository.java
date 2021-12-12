@@ -18,7 +18,6 @@ public interface StartupRepository extends JpaRepository<Startup, Long>{
     List<Startup> findByTag(@Param("tag") String tag);
     List<Startup> findByPublicado(Boolean publicado);
     public List<Startup> findByOrderByVotosDesc();
-    @Query("FROM Startup ORDER BY votos DESC")
-    List<Startup> findByEventId(Long eventId);
+    List<Startup> findByEventIdOrderByVotosDesc(Long eventId);
 
 }
