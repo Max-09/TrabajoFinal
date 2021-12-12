@@ -2,6 +2,7 @@ package com.informatorio.ApiRest.controller;
 
 import com.informatorio.ApiRest.entity.Event;
 import com.informatorio.ApiRest.repository.EventRepository;
+import com.informatorio.ApiRest.repository.StartupRepository;
 import com.informatorio.ApiRest.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,6 +26,8 @@ public class EventController {
     EventService eventService;
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    StartupRepository startupRepository;
 
     @PostMapping
     public Event guardarEvent(@RequestBody Event event){
@@ -41,12 +45,13 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public Event actualizarEvent(@PathVariable Long id, @RequestBody Event event){
+    public Event actualizarEvent(@PathVariable("id") Long id, @RequestBody Event event){
         return this.eventService.actualizarEvent(id, event);
     }
 
-    @GetMapping (value = "/ranking/{id}")
-    public ResponseEntity<?> ranking(@PathVariable("id") Long id){
-        return new ResponseEntity<>(eventService.startup(id), HttpStatus.OK);
+    @GetMapping 
+    public ResponseEntity<?> ranking(@RequestParam(required = false) Long eventId){
+        return new ResponseEntity<>(startupRepository.findByEventId(eventId), HttpStatus.OK);
     }
+
 }

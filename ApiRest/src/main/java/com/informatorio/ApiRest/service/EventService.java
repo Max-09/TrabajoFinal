@@ -1,9 +1,6 @@
 package com.informatorio.ApiRest.service;
 
-import java.util.List;
-
 import com.informatorio.ApiRest.entity.Event;
-import com.informatorio.ApiRest.entity.Startup;
 import com.informatorio.ApiRest.repository.EventRepository;
 import com.informatorio.ApiRest.repository.StartupRepository;
 
@@ -30,15 +27,24 @@ public class EventService {
         }
     }
 
-    public Event actualizarEvent(Long userId, Event eventNew){
-        Event userOld = eventRepository.getById(userId);
-        userOld.setName(eventNew.getName());
-        userOld.setActivo(eventNew.getActivo());
-        return eventRepository.save(userOld);
+    public Event actualizarEvent(Long eventId, Event eventNew){
+        Event eventOld = eventRepository.getById(eventId);
+        if(eventNew.getDetalles() != null){
+            eventOld.setDetalles(eventNew.getDetalles());
+        }
+        if(eventNew.getActivo() != null){
+            eventOld.setActivo(eventNew.getActivo());
+        }
+        if(eventNew.getFechaCierre() != null){
+            eventOld.setFechaCierre(eventNew.getFechaCierre());
+        }
+        if(eventNew.getEstado() != null){
+            eventOld.setEstado(eventNew.getEstado());
+        }
+        if(eventNew.getPremio() != 0){
+            eventOld.setPremio(eventNew.getPremio());
+        }
+        return eventRepository.save(eventOld);
     }
 
-    public List<Startup> startup(Long eventId){
-        Event aux = eventRepository.getById(eventId);
-        return aux.getStartup();
-    }
 }

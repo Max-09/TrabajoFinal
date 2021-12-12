@@ -38,11 +38,21 @@ public class UserService {
 
     public User actualizarUser(Long userId, User userNew){
         User userOld = userRepository.getById(userId);
-        userOld.setNombre(userNew.getNombre());
-        userOld.setApellido(userNew.getApellido());
-        userOld.setPais(userNew.getPais());
-        userOld.setCiudad(userNew.getCiudad());
-        userOld.setProvincia(userNew.getProvincia());
+        if(userNew.getNombre() != null){
+            userOld.setNombre(userNew.getNombre());
+        }
+        if(userNew.getApellido() != null){
+            userOld.setApellido(userNew.getApellido());
+        }
+        if(userNew.getPais() != null){
+            userOld.setPais(userNew.getPais());
+        }
+        if(userNew.getCiudad() != null){
+            userOld.setCiudad(userNew.getCiudad());
+        }
+        if(userNew.getProvincia() != null){
+            userOld.setProvincia(userNew.getProvincia());
+        }
         return userRepository.save(userOld);
     }
 }

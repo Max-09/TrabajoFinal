@@ -37,10 +37,24 @@ public class StartupService {
     }
     public Startup actualizarStartup(Long startupId, Startup startupNew){
         Startup startupOld = startupRepository.getById(startupId);
-        startupOld.setContenido(startupNew.getContenido());
-        startupOld.setDescripcion(startupNew.getDescripcion());
-        startupOld.setObjetivo(startupNew.getObjetivo());
-        startupOld.setPublicado(startupNew.isPublicado());
+        if(startupNew.getContenido() != null){
+            startupOld.setContenido(startupNew.getContenido());
+        }
+        if(startupNew.getDescripcion() != null){
+            startupOld.setDescripcion(startupNew.getDescripcion());
+        }
+        if(startupNew.getObjetivo() != 0){
+            startupOld.setObjetivo(startupNew.getObjetivo());
+        }
+        if(startupNew.isPublicado()){
+            startupOld.setPublicado(startupNew.isPublicado());
+        }
+        if(startupNew.getTags() != null){
+            startupOld.setTags(startupNew.getTags());
+        }
+        if(startupNew.getEventId() != null){
+            startupOld.setEventId(startupNew.getEventId());
+        }
         return startupRepository.save(startupOld);
     }
 

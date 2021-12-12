@@ -1,16 +1,11 @@
 package com.informatorio.ApiRest.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -32,11 +27,6 @@ public class Event {
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate fechaCierre;
     private String estado;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy("votos DESC")
-    private List<Startup> startup;
-    
-
     private double premio;
 
     public Long getId() {
@@ -95,14 +85,6 @@ public class Event {
         this.estado = estado;
     }
 
-    public List<Startup> getStartup() {
-        return startup;
-    }
-
-    public void setStartup(List<Startup> startup) {
-        this.startup = startup;
-    }
-
     public double getPremio() {
         return premio;
     }
@@ -115,8 +97,10 @@ public class Event {
     public String toString() {
         return "Event [activo=" + activo + ", detalles=" + detalles + ", estado=" + estado + ", fechaCierre="
                 + fechaCierre + ", fechaCreacion=" + fechaCreacion + ", id=" + id + ", name=" + name + ", premio="
-                + premio + ", startup=" + startup + "]";
+                + premio + "]";
     }
+
+    
     
     
 }

@@ -1,7 +1,5 @@
 package com.informatorio.ApiRest.controller;
 
-import java.util.ArrayList;
-
 import com.informatorio.ApiRest.entity.Startup;
 import com.informatorio.ApiRest.repository.StartupRepository;
 import com.informatorio.ApiRest.repository.TagRepository;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,10 +32,6 @@ public class StartupController {
     @Autowired
     TagRepository tagRepository;
 
-    @GetMapping
-    public ArrayList<Startup> obtenerStartup(){
-        return startupService.obtenerStartup();
-    }
 
     @PostMapping
     public Startup guardarStartup(@RequestBody Startup startup){
@@ -57,14 +52,16 @@ public class StartupController {
     public Startup actualizarUser(@PathVariable Long id, @RequestBody Startup startup){
         return this.startupService.actualizarStartup(id, startup);
     }
-    @GetMapping (value = "/tag/{tag}")
-    public ResponseEntity<?> buscarPorTag(@PathVariable("tag") String tag){
-        return new ResponseEntity<>(startupRepository.findByTag(tag), HttpStatus.OK);
-    }
 
-    @GetMapping (value = "/online/{publicado}")
-    public ResponseEntity<?> buscarPorOnline(@PathVariable("publicado") Boolean o){
-        return new ResponseEntity<>(startupRepository.findByPublicado(o), HttpStatus.OK);
+    @GetMapping 
+    public ResponseEntity<?> obtenerStartups(@RequestParam(required = false) Boolean o,
+                                            @RequestParam(required = false) String tag){
+        if(o != null){
+            return new ResponseEntity<>(startupRepository.findByPublicado(o), HttpStatus.OK);
+        }else if(tag != null){
+            return new ResponseEntity<>(startupRepository.findByTag(tag), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(startupRepository.findAll(), HttpStatus.OK);
     }
     
 }
