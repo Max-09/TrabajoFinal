@@ -59,10 +59,10 @@ public class UserController {
 
     @GetMapping 
     public ResponseEntity<?> obtenerUser(
-            @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fecha,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
             @RequestParam(required = false) String ciudad){
                 if(fecha != null){
-                    return new ResponseEntity<>(userRepository.findByFechaCreacionAfter(fecha), HttpStatus.OK);
+                    return new ResponseEntity<>(userRepository.findByFechaCreacionAfter(fecha.atStartOfDay()), HttpStatus.OK);
                 } else if (ciudad != null){
                     return new ResponseEntity<>(userRepository.findByCiudad(ciudad), HttpStatus.OK);
                 }
