@@ -27,7 +27,7 @@ public class VotesService {
         Startup startupVoto = startupRepository.getById(votoaux.getStartupId());
         Event eventVoto = eventRepository.getById(votoaux.getEventId());
         if(startupVoto.isPublicado()){
-            if(eventVoto.getEstado()!="Finalizado"){
+            if(eventVoto.getEstado()!="FINALIZADO"){
                 startupVoto.setVotos(startupVoto.getVotos() + 1);
                 startupRepository.save(startupVoto);
                 return votesRepository.save(voto);
